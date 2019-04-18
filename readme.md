@@ -19,7 +19,7 @@ Stencil components are just Web Components, so they work in any major framework 
 To start:
 
 ```bash
-git clonde https://github.com/devmikey/nhsx-widgets.git
+git clone https://github.com/devmikey/nhsx-widgets.git
 cd nhs-widgets
 npm install
 npm start
