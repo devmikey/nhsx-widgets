@@ -1,0 +1,89 @@
+
+
+@import '../../../node_modules/nhsuk-frontend/packages/nhsuk';
+
+.inactive {
+	display:none;
+}
+
+.active {
+	display:block;
+}
+
+.nhsuk-table {
+	margin-top: 5px;
+    margin-bottom: 5px;
+    border: solid 1px $color_nhsuk-grey-4;
+}
+
+table th {
+	
+	padding-bottom:0;
+	padding-top:0;
+	background-color: $color_nhsuk-grey-4;
+}
+
+table td {
+	
+	padding-bottom:0;
+	padding-top:0;
+}
+
+
+.nhsuk-grid-column-full {
+	padding:0;
+}
+
+
+.nhsuk-details__text {
+    padding-top: 0;
+    padding-bottom: 0;
+       
+}
+
+.nhsuk-details {
+	margin-bottom: 3px;
+	margin-top: 3px;
+}
+
+.nhsuk-grid-row {
+    margin-top:5px;
+	margin-bottom:0;
+}
+
+.eol-linkId {
+ 
+}
+
+.nhsuk-details__summary {
+	display: flex;
+}
+
+.question-text-missing {
+	color: red;
+
+}
+
+.valueString{
+	color: slateblue;
+}
+
+.valueReference{
+	
+}
+
+.valueDateTime{
+	
+}
+
+.valueCoding{
+	
+}
+
+.valueInteger{
+	
+}
+
+.question-item {
+	padding-top: 5px;
+}

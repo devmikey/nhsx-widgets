@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+  <title>Stencil Component Starter</title>
+  <script src="/build/nhsx.js"></script>
+
+</head>
+<body>
+	<nhsx-eol></nhsx-eol> 
+  <script>
+
+  		/*
+			fetch the data from the FHIR server
+			set the sections to be displayed
+			set the questionnaire response to render
+  		*/
+
+  		//url = "./assets/testdata/questionnaire.json"
+  		url = "https://data.developer.nhs.uk/ccri-fhir/STU3/QuestionnaireResponse?patient=1184&questionnaire=https%3A%2F%2Ffhir.nhs.uk%2FSTU3%2FQuestionnaire%2FCareConnect-EOLC-1&_include=*&_count=100&_format=application/json+fhir";
+  		
+		fetch(url)
+		  .then(
+		    function(response) {
+		      if (response.status !== 200) {
+		        console.log('Looks like there was a problem. Status Code: ' +
+		          response.status);
+		        return;
+		      }
+
+		      // Examine the text in the response
+		      response.json().then(function(data) {
+		        var cmp = document.querySelector('nhsx-eol');
+				cmp.questionnaire = data;
+		      });
+		    }
+		  )
+		  .catch(function(err) {
+		    console.log('Error Fetching FHIR Resource :-S', err);
+		  });
+
+
+  </script>
+
+</body>
+</html>
