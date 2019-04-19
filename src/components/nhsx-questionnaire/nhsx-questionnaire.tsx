@@ -2,11 +2,11 @@ import { Component, Prop } from '@stencil/core';
 
 
 @Component({
-  tag: 'nhsx-eol',
-  styleUrl: 'nhsx-eol.scss',
+  tag: 'nhsx-questionnaire',
+  styleUrl: 'nhsx-questionnaire.scss',
   shadow: true
 })
-export class NhsxEol {
+export class NhsxQuestionnaire {
    /*
     test url = 
     https://data.developer.nhs.uk/ccri-fhir/STU3/QuestionnaireResponse?patient=1184&questionnaire=https%3A%2F%2Ffhir.nhs.uk%2FSTU3%2FQuestionnaire%2FCareConnect-EOLC-1&_include=*&_count=100&_format=application/json+fhir
@@ -15,11 +15,10 @@ export class NhsxEol {
   */
 
    @Prop() questionnaire: any;
-   sections: Array<string> = ['CPR','ATP','PREF','PRO','DOC','LPA','FUN','DIS','CON','EOL'];
-
+   @Prop() sections: Array<string> = ['*'];
+  
    items: Array<any> = new Array();
    
-   toggleState: object = {};
    hideLinkId: boolean = true;
 
   componentWillLoad() {
@@ -31,28 +30,34 @@ export class NhsxEol {
   }
 
 
-
    /* helper functions */
 
    buildItems(){
+   	var s = this.sections;
     /* build up list in correct order */
     if (this.items.length>0) return;
-    if (this.sections == null) return;
     if (this.questionnaire == null) return;
+    if (this.sections.length == 0) {
+      this.sections.push('*'); 
+    }
 
-      for (var u=0;u<this.sections.length;u++) {
-        for (var i=0;i<this.questionnaire.entry[0].resource.item.length;i++) {
-          var linkId = this.questionnaire.entry[0].resource.item[i].linkId;
-          /* add any undefined link sections to the end*/
-          if (!this.sections.includes(linkId)) {
-            this.sections.push(linkId);
-          }  
-          if (this.sections[u]==this.questionnaire.entry[0].resource.item[i].linkId) {     
-             this.items.push(this.questionnaire.entry[0].resource.item[i])
-             this.toggleState[this.sections[u]]="inactive"; 
-          }
-        }
-      }
+    var q = this.questionnaire.entry.filter(o=> o.resource.resourceType == "QuestionnaireResponse");
+    /* only expect to see one questionnaire response */
+    if (q.length !=1) return;
+    q=q[0];
+
+	for (var u=0;u<s.length;u++) {
+	    for (var i=0;i<q.resource.item.length;i++) {
+	      var linkId = q.resource.item[i].linkId;
+	      /* add any undefined link sections to the end to be displayed*/
+	      if (!s.includes(linkId)) {
+	        s.push(linkId);
+	      }  
+	      if (s[u]==q.resource.item[i].linkId) {     
+	         this.items.push(q.resource.item[i]);
+	      }
+	    }
+	}
 
    }
 
@@ -86,7 +91,7 @@ export class NhsxEol {
     return "";
   }
 
-  classType(answer){
+  cssClass(answer){
     if (answer.valueString) {
       return "valueString"
     }
@@ -378,9 +383,9 @@ export class NhsxEol {
   QuestionnaireItemAnswer(item){
     return(
       <div class="answer">       
-        <span class="eol-linkId">{item.linkId ? this.getLinkId(item):''}</span> 
+        <span class="questionnaire-linkId">{item.linkId ? this.getLinkId(item):''}</span> 
         {item.answer ? item.answer.map((answer) =>
-          <span class={this.classType(answer)}>
+          <span class={this.cssClass(answer)}>
             {this.getAnswer(answer)}
           </span>
         ):''}
@@ -430,8 +435,6 @@ QuestionnaireItem(items){
   }
 
   render() {
-   
-    if (this.sections==undefined) return;
     if (this.questionnaire==undefined) return;
 
     return (

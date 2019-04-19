@@ -12,36 +12,38 @@ import '@stencil/core';
 
 export namespace Components {
 
-  interface NhsxEol {
+  interface NhsxQuestionnaire {
     'questionnaire': any;
+    'sections': Array<string>;
   }
-  interface NhsxEolAttributes extends StencilHTMLAttributes {
+  interface NhsxQuestionnaireAttributes extends StencilHTMLAttributes {
     'questionnaire'?: any;
+    'sections'?: Array<string>;
   }
 }
 
 declare global {
   interface StencilElementInterfaces {
-    'NhsxEol': Components.NhsxEol;
+    'NhsxQuestionnaire': Components.NhsxQuestionnaire;
   }
 
   interface StencilIntrinsicElements {
-    'nhsx-eol': Components.NhsxEolAttributes;
+    'nhsx-questionnaire': Components.NhsxQuestionnaireAttributes;
   }
 
 
-  interface HTMLNhsxEolElement extends Components.NhsxEol, HTMLStencilElement {}
-  var HTMLNhsxEolElement: {
-    prototype: HTMLNhsxEolElement;
-    new (): HTMLNhsxEolElement;
+  interface HTMLNhsxQuestionnaireElement extends Components.NhsxQuestionnaire, HTMLStencilElement {}
+  var HTMLNhsxQuestionnaireElement: {
+    prototype: HTMLNhsxQuestionnaireElement;
+    new (): HTMLNhsxQuestionnaireElement;
   };
 
   interface HTMLElementTagNameMap {
-    'nhsx-eol': HTMLNhsxEolElement
+    'nhsx-questionnaire': HTMLNhsxQuestionnaireElement
   }
 
   interface ElementTagNameMap {
-    'nhsx-eol': HTMLNhsxEolElement;
+    'nhsx-questionnaire': HTMLNhsxQuestionnaireElement;
   }
 
 
